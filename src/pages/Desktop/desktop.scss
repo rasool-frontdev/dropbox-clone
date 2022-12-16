@@ -1,0 +1,47 @@
+.desktop {
+    display: flex;
+    justify-content: space-around;
+    height: 93.5vh;
+    &-desc {
+        margin-top: 3rem;
+        &__title {
+            font-size: 3rem;
+            font-weight: 400;
+        }
+        &__text {
+            margin: 1rem 0 2rem 0;
+            font-size: 1rem;
+            font-weight: 500;
+        }
+        &__btn {
+            display: flex;
+            align-items: center;
+            font-size: 1rem;
+            color: #f7f5f2;
+            border: none;
+            width: 13rem;
+            height: 4.5rem;
+            padding-left: 1.5rem;
+            cursor: pointer;
+            background: #0061fe;
+            font-weight: 600;
+        }
+        &__btn > .arrow {
+            margin-left: 1.5rem;
+        }
+        &__btn:hover {
+            background: #297afe;
+        }
+    }
+    &-right {
+        background: #be4b0a;
+        width: 63rem;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    &-right > img {
+        width: 55rem;
+    }
+}
