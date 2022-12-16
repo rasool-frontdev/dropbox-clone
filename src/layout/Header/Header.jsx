@@ -1,6 +1,8 @@
 import React from "react";
 import { SiDropbox } from "react-icons/si";
-import { Link, NavLink, useLocation } from "react-router-dom";
+import { FaUserCog } from "react-icons/fa";
+
+import { NavLink, useLocation } from "react-router-dom";
 
 const Header = () => {
     const location = useLocation();
@@ -16,50 +18,26 @@ const Header = () => {
                         <h3 className="header-nav__title">Dropbox</h3>
                     </NavLink>
                     <div className="header-nav__links">
-                        {/* <div class="dropdown">
-                            <button class="dropdown-btn">Dropdown</button>
-                            <div class="dropdown-content">
-                                <h1 href="#">Desctop app</h1>
-                                <Link
-                                    to={{
-                                        pathname: "https://google.com",
-                                    }}
-                                    target="_blank">Desctop app</Link>
-                               <Link
-                                    to={{
-                                        pathname: "https://google.com",
-                                    }}
-                                    target="_blank">Mobile app</Link>
+                        {location.pathname !== "/register" &&
+                        location.pathname !== "/login" ? (
+                            <div className="dropdown">
+                                <div className="dropdown-btn">Get app</div>
+                                <div className="dropdown-content">
+                                    <NavLink
+                                        className="header-nav__link"
+                                        to="/">
+                                        Desktop app
+                                    </NavLink>
+                                    <NavLink
+                                        className="header-nav__link"
+                                        to="/mobile">
+                                        Mobile app
+                                    </NavLink>
+                                </div>
                             </div>
-                        </div> */}
-
-                        <div className="dropdown">
-                            <div className="dropdown-btn">Get app</div>
-                            <div class="dropdown-content">
-                                {/* <a
-                                    href="https://www.dropbox.com/download?os=win"
-                                    target="_blank"
-                                    rel="noreferrer">
-                                    Desctop app
-                                </a> */}
-                                {/* <a
-                                    href="https://play.google.com/store/apps/details?hl=en&id=com.dropbox.android"
-                                    target="_blank"
-                                    rel="noreferrer">
-                                    Mobile app
-                                </a> */}
-                                <NavLink
-                                    className="header-nav__link"
-                                    to="/desktop">
-                                    Desktop app
-                                </NavLink>
-                                <NavLink
-                                    className="header-nav__link"
-                                    to="/mobile">
-                                    Mobile app
-                                </NavLink>
-                            </div>
-                        </div>
+                        ) : (
+                            ""
+                        )}
                         {(() => {
                             if (location.pathname === "/login") {
                                 return (
@@ -77,17 +55,39 @@ const Header = () => {
                                         Sign in
                                     </NavLink>
                                 );
+                            } else if (location.pathname === "/dashboard") {
+                                return (
+                                    <div className="dropdown">
+                                        <div className="header-nav__login dropdown-btn">
+                                            <FaUserCog
+                                                style={{ width: "3rem" }}
+                                            />
+                                            <div className="dropdown-content">
+                                                <NavLink
+                                                    className="header-nav__link"
+                                                    to="/settings">
+                                                    Settings
+                                                </NavLink>
+                                                <NavLink
+                                                    className="header-nav__link"
+                                                    to="/">
+                                                    Sign out
+                                                </NavLink>
+                                            </div>
+                                        </div>
+                                    </div>
+                                );
                             } else {
                                 return (
                                     <>
                                         <NavLink
                                             className="header-nav__link"
-                                            to="/login">
+                                            to="/register">
                                             Sign up
                                         </NavLink>
                                         <NavLink
                                             className="header-nav__link"
-                                            to="/register">
+                                            to="/sign up">
                                             Sign in
                                         </NavLink>
                                     </>

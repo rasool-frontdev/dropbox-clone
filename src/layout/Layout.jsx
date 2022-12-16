@@ -1,5 +1,6 @@
 import React from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
+import Dashboard from "../pages/Dashboard/Dashboard";
 import Desktop from "../pages/Desktop/Desktop";
 import Home from "../pages/Home/Home";
 import Login from "../pages/Login/Login";
@@ -20,6 +21,7 @@ const Layout = () => {
                 <Route path="/login" element={<Login />} />
                 <Route path="/desktop" element={<Desktop />} />
                 <Route path="/mobile" element={<Mobile />} />
+                <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="*" element={<NotFound />} />
             </Routes>
         </>
