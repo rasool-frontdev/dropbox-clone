@@ -17,6 +17,10 @@ export const ContextProvider = ({ children }) => {
         return createUserWithEmailAndPassword(auth, email, password);
     };
 
+    const signInUser = (email, password) => {
+        return signInWithEmailAndPassword(auth, email, password);
+    };
+
     const signOutUser = () => {
         return signOut(auth);
     };
@@ -31,9 +35,10 @@ export const ContextProvider = ({ children }) => {
     }, []);
 
     const value = {
-        createUser,
         user,
+        createUser,
         signOutUser,
+        signInUser,
     };
 
     return <Context.Provider value={value}>{children}</Context.Provider>;

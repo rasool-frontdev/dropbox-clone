@@ -39,12 +39,12 @@ const Header = () => {
                                 <div className="dropdown-btn">Get app</div>
                                 <div className="dropdown-content">
                                     <NavLink
-                                        className="header-nav__link"
-                                        to="/">
+                                        className="header-nav__link download"
+                                        to="/desktop">
                                         Desktop app
                                     </NavLink>
                                     <NavLink
-                                        className="header-nav__link"
+                                        className="header-nav__link download"
                                         to="/mobile">
                                         Mobile app
                                     </NavLink>
@@ -78,12 +78,12 @@ const Header = () => {
                                                 style={{ width: "3rem" }}
                                             />
                                             <div className="dropdown-content">
-                                                <span className="header-nav__link">
+                                                <span className="header-nav__link user">
                                                     Settings
                                                 </span>
                                                 <span
                                                     onClick={handlerSignOut}
-                                                    className="header-nav__link">
+                                                    className="header-nav__link user">
                                                     Sign out
                                                 </span>
                                             </div>
@@ -100,7 +100,7 @@ const Header = () => {
                                         </NavLink>
                                         <NavLink
                                             className="header-nav__link"
-                                            to="/signup">
+                                            to="/login">
                                             Sign in
                                         </NavLink>
                                     </>

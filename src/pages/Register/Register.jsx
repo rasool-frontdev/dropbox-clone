@@ -1,5 +1,4 @@
 import { Link, useNavigate } from "react-router-dom";
-import { auth } from "../../firebase-config";
 import { Context } from "../../context/context";
 import { useContext, useState } from "react";
 import { toast } from "react-toastify";
