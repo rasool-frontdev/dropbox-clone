@@ -15,12 +15,10 @@ const Register = () => {
         e.preventDefault();
         try {
             await createUser(email, password);
-            // alert("Successfully registered!");
             toast.success("Successfully registered!");
             navigate("/dashboard");
         } catch (error) {
             toast.error(`Stop ${error.message}`);
-            // alert(error.message);
         }
     };
 

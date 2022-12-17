@@ -1,11 +1,26 @@
-import React from "react";
+import React, { useContext } from "react";
 import { SiDropbox } from "react-icons/si";
 import { FaUserCog } from "react-icons/fa";
 
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
+import { Context } from "../../context/context";
+import { toast } from "react-toastify";
 
 const Header = () => {
+    const navigate = useNavigate();
+
     const location = useLocation();
+    const { signOutUser } = useContext(Context);
+
+    const handlerSignOut = async (e) => {
+        try {
+            await signOutUser();
+            navigate("/");
+            toast.success("Successfully signed out!");
+        } catch (error) {
+            toast.error(error.message);
+        }
+    };
 
     return (
         <>
@@ -63,16 +78,14 @@ const Header = () => {
                                                 style={{ width: "3rem" }}
                                             />
                                             <div className="dropdown-content">
-                                                <NavLink
-                                                    className="header-nav__link"
-                                                    to="/settings">
+                                                <span className="header-nav__link">
                                                     Settings
-                                                </NavLink>
-                                                <NavLink
-                                                    className="header-nav__link"
-                                                    to="/">
+                                                </span>
+                                                <span
+                                                    onClick={handlerSignOut}
+                                                    className="header-nav__link">
                                                     Sign out
-                                                </NavLink>
+                                                </span>
                                             </div>
                                         </div>
                                     </div>
