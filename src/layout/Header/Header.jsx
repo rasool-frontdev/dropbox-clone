@@ -100,7 +100,7 @@ const Header = () => {
                                         </NavLink>
                                         <NavLink
                                             className="header-nav__link"
-                                            to="/sign up">
+                                            to="/signup">
                                             Sign in
                                         </NavLink>
                                     </>
