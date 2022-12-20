@@ -10,7 +10,7 @@ const Header = () => {
     const navigate = useNavigate();
 
     const location = useLocation();
-    const { signOutUser } = useContext(Context);
+    const { signOutUser, user } = useContext(Context);
 
     const handlerSignOut = async (e) => {
         try {
@@ -26,14 +26,135 @@ const Header = () => {
         <>
             <div className="header">
                 <div className="header-nav">
-                    <NavLink to="/" className="header-nav__logo">
-                        <div className="header-nav__box">
-                            <SiDropbox className="header-nav__icon" />
-                        </div>
-                        <h3 className="header-nav__title">Dropbox</h3>
-                    </NavLink>
-                    <div className="header-nav__links">
-                        {location.pathname !== "/register" &&
+                    {user ? (
+                        <>
+                            <NavLink
+                                to="/dashboard"
+                                className="header-nav__logo">
+                                <div className="header-nav__box">
+                                    <SiDropbox className="header-nav__icon" />
+                                </div>
+                                <h3 className="header-nav__title">Dropbox</h3>
+                            </NavLink>
+                            <div className="header-nav__links">
+                                {location.pathname === "/dashboard" ? (
+                                    <div className="dropdown">
+                                        <div className="dropdown-btn">
+                                            Get app
+                                        </div>
+                                        <div className="dropdown-content">
+                                            <NavLink
+                                                className="header-nav__link download"
+                                                to="/desktop">
+                                                Desktop app
+                                            </NavLink>
+                                            <NavLink
+                                                className="header-nav__link download"
+                                                to="/mobile">
+                                                Mobile app
+                                            </NavLink>
+                                        </div>
+                                    </div>
+                                ) : (
+                                    ""
+                                )}
+                                {location.pathname !== "/register" &&
+                                location.pathname !== "/login" ? (
+                                    <div className="dropdown">
+                                        <div className="header-nav__login dropdown-btn">
+                                            <FaUserCog
+                                                style={{ width: "3rem" }}
+                                            />
+                                            <div className="dropdown-content">
+                                                <span className="header-nav__link user">
+                                                    Settings
+                                                </span>
+                                                <span
+                                                    onClick={handlerSignOut}
+                                                    className="header-nav__link user">
+                                                    Sign out
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                ) : (
+                                    ""
+                                )}
+                            </div>
+                        </>
+                    ) : (
+                        <>
+                            <NavLink to="/" className="header-nav__logo">
+                                <div className="header-nav__box">
+                                    <SiDropbox className="header-nav__icon" />
+                                </div>
+                                <h3 className="header-nav__title">Dropbox</h3>
+                            </NavLink>
+                            <div className="header-nav__links">
+                                {location.pathname !== "/register" &&
+                                location.pathname !== "/login" ? (
+                                    <div className="dropdown">
+                                        <div className="dropdown-btn">
+                                            Get app
+                                        </div>
+                                        <div className="dropdown-content">
+                                            <NavLink
+                                                className="header-nav__link download"
+                                                to="/desktop">
+                                                Desktop app
+                                            </NavLink>
+                                            <NavLink
+                                                className="header-nav__link download"
+                                                to="/mobile">
+                                                Mobile app
+                                            </NavLink>
+                                        </div>
+                                    </div>
+                                ) : (
+                                    ""
+                                )}
+                                {(() => {
+                                    if (location.pathname === "/login") {
+                                        return (
+                                            <NavLink
+                                                className="header-nav__link"
+                                                to="/register">
+                                                Sign up
+                                            </NavLink>
+                                        );
+                                    } else if (
+                                        location.pathname === "/register"
+                                    ) {
+                                        return (
+                                            <NavLink
+                                                className="header-nav__link"
+                                                to="/login">
+                                                Sign in
+                                            </NavLink>
+                                        );
+                                    } else {
+                                        return (
+                                            <>
+                                                <NavLink
+                                                    className="header-nav__link"
+                                                    to="/register">
+                                                    Sign up
+                                                </NavLink>
+                                                <NavLink
+                                                    className="header-nav__link"
+                                                    to="/login">
+                                                    Sign in
+                                                </NavLink>
+                                            </>
+                                        );
+                                    }
+                                })()}
+                            </div>
+                        </>
+                    )}
+
+                    {/* <div className="header-nav__links">
+                        {/* {location.pathname !== "/register" &&
                         location.pathname !== "/login" ? (
                             <div className="dropdown">
                                 <div className="dropdown-btn">Get app</div>
@@ -52,8 +173,8 @@ const Header = () => {
                             </div>
                         ) : (
                             ""
-                        )}
-                        {(() => {
+                        )} */}
+                    {/* {(() => {
                             if (location.pathname === "/login") {
                                 return (
                                     <NavLink
@@ -69,26 +190,6 @@ const Header = () => {
                                         to="/login">
                                         Sign in
                                     </NavLink>
-                                );
-                            } else if (location.pathname === "/dashboard") {
-                                return (
-                                    <div className="dropdown">
-                                        <div className="header-nav__login dropdown-btn">
-                                            <FaUserCog
-                                                style={{ width: "3rem" }}
-                                            />
-                                            <div className="dropdown-content">
-                                                <span className="header-nav__link user">
-                                                    Settings
-                                                </span>
-                                                <span
-                                                    onClick={handlerSignOut}
-                                                    className="header-nav__link user">
-                                                    Sign out
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
                                 );
                             } else {
                                 return (
@@ -106,8 +207,8 @@ const Header = () => {
                                     </>
                                 );
                             }
-                        })()}
-                    </div>
+                        })()} */}
+                    {/* </div> */}
                 </div>
             </div>
         </>
