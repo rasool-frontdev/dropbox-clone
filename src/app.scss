@@ -9,6 +9,31 @@
     font-family: "Roboto", sans-serif;
 }
 
+.container {
+    margin: 0 15%;
+}
+
+.upload-file {
+    // display: none;
+}
+
+.btns {
+    display: flex;
+    column-gap: 1.2rem;
+}
+.btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    column-gap: 0.2rem;
+    border: none;
+    width: 8.5rem;
+    height: 3rem;
+    background: #0057e5;
+    color: #f7f5f2;
+    cursor: pointer;
+}
+
 .register,
 .login {
     display: flex;
@@ -71,3 +96,4 @@
 @import "./pages/Home/home.scss";
 @import "./pages/Mobile/mobile.scss";
 @import "./pages/Desktop/desktop.scss";
+@import "./pages/Settings/settings.scss";

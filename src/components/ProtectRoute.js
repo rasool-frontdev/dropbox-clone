@@ -8,10 +8,7 @@ const ProtectRoute = ({ children }) => {
     if (!user) {
         return <Navigate to="/" />;
     }
-    // if(user){
-    //     return <Navigate to="/dashboard" />;
 
-    // }
     return children;
 };
 

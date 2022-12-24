@@ -8,6 +8,7 @@ import Login from "../pages/Login/Login";
 import Mobile from "../pages/Mobile/Mobile";
 import NotFound from "../pages/NotFound/NotFound";
 import Register from "../pages/Register/Register";
+import Settings from "../pages/Settings/Settings";
 import Header from "./Header/Header";
 
 const Layout = () => {
@@ -30,6 +31,7 @@ const Layout = () => {
                         </ProtectRoute>
                     }
                 />
+                <Route path="/settings" element={<Settings />} />
                 <Route path="*" element={<NotFound />} />
             </Routes>
         </>

@@ -4,6 +4,8 @@ import { useContext, useState } from "react";
 import { toast } from "react-toastify";
 
 const Register = () => {
+    const userData= () =>{
+    }
     const { createUser } = useContext(Context);
     const navigate = useNavigate();
 
@@ -31,17 +33,26 @@ const Register = () => {
                     </div>
                     <div className="form-body">
                         <p>First name</p>
-                        <input type="text" required />
+                        <input
+                            id="firstName"
+                            name="firstName"
+                            type="text"
+                            required
+                        />
                         <p>Last name</p>
                         <input type="text" />
                         <p>Email</p>
                         <input
+                            id="email"
+                            name="email"
                             type="email"
                             required="Please enter an email address"
                             onChange={(e) => setEmail(e.target.value)}
                         />
                         <p>Password</p>
                         <input
+                            id="password"
+                            name="password"
                             type="password"
                             required="Please enter a password"
                             onChange={(e) => setPassword(e.target.value)}

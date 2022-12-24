@@ -7,6 +7,10 @@ import { Context } from "../../context/context";
 import { toast } from "react-toastify";
 
 const Header = () => {
+    // ! Header section
+    // ? Header section
+    // * Header section
+
     const navigate = useNavigate();
 
     const location = useLocation();
@@ -37,7 +41,9 @@ const Header = () => {
                                 <h3 className="header-nav__title">Dropbox</h3>
                             </NavLink>
                             <div className="header-nav__links">
-                                {location.pathname === "/dashboard" ? (
+                                {location.pathname === "/dashboard" ||
+                                location.pathname === "/desktop" ||
+                                location.pathname === "/mobile" ? (
                                     <div className="dropdown">
                                         <div className="dropdown-btn">
                                             Get app
@@ -66,9 +72,11 @@ const Header = () => {
                                                 style={{ width: "3rem" }}
                                             />
                                             <div className="dropdown-content">
-                                                <span className="header-nav__link user">
+                                                <NavLink
+                                                    className="header-nav__link user"
+                                                    to="/settings">
                                                     Settings
-                                                </span>
+                                                </NavLink>
                                                 <span
                                                     onClick={handlerSignOut}
                                                     className="header-nav__link user">
@@ -152,63 +160,6 @@ const Header = () => {
                             </div>
                         </>
                     )}
-
-                    {/* <div className="header-nav__links">
-                        {/* {location.pathname !== "/register" &&
-                        location.pathname !== "/login" ? (
-                            <div className="dropdown">
-                                <div className="dropdown-btn">Get app</div>
-                                <div className="dropdown-content">
-                                    <NavLink
-                                        className="header-nav__link download"
-                                        to="/desktop">
-                                        Desktop app
-                                    </NavLink>
-                                    <NavLink
-                                        className="header-nav__link download"
-                                        to="/mobile">
-                                        Mobile app
-                                    </NavLink>
-                                </div>
-                            </div>
-                        ) : (
-                            ""
-                        )} */}
-                    {/* {(() => {
-                            if (location.pathname === "/login") {
-                                return (
-                                    <NavLink
-                                        className="header-nav__link"
-                                        to="/register">
-                                        Sign up
-                                    </NavLink>
-                                );
-                            } else if (location.pathname === "/register") {
-                                return (
-                                    <NavLink
-                                        className="header-nav__link"
-                                        to="/login">
-                                        Sign in
-                                    </NavLink>
-                                );
-                            } else {
-                                return (
-                                    <>
-                                        <NavLink
-                                            className="header-nav__link"
-                                            to="/register">
-                                            Sign up
-                                        </NavLink>
-                                        <NavLink
-                                            className="header-nav__link"
-                                            to="/login">
-                                            Sign in
-                                        </NavLink>
-                                    </>
-                                );
-                            }
-                        })()} */}
-                    {/* </div> */}
                 </div>
             </div>
         </>
