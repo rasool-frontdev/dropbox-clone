@@ -18,12 +18,16 @@ const Dashboard = () => {
         if (fileUpload == null) return;
 
         const fileRef = ref(storage, `files/${fileUpload.name + v4()}`);
-        uploadBytes(fileRef, fileUpload).then((snaphsot) => {
-            getDownloadURL(snaphsot.ref).then((url) => {
-                setFileList((prev) => [...prev, url]);
+        uploadBytes(fileRef, fileUpload)
+            .then((snaphsot) => {
+                getDownloadURL(snaphsot.ref).then((url) => {
+                    setFileList((prev) => [...prev, url]);
+                });
+                toast.success("File uploaded successfully");
+            })
+            .catch((error) => {
+                toast.error("Failed to upload file");
             });
-            toast.success("File uploaded successfully");
-        });
     };
 
     useEffect(() => {
