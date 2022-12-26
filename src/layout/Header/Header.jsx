@@ -74,6 +74,11 @@ const Header = () => {
                                             <div className="dropdown-content">
                                                 <NavLink
                                                     className="header-nav__link user"
+                                                    to="/dashboard">
+                                                    Dashboard
+                                                </NavLink>
+                                                <NavLink
+                                                    className="header-nav__link user"
                                                     to="/settings">
                                                     Settings
                                                 </NavLink>

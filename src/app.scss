@@ -10,11 +10,14 @@
 }
 
 .container {
-    margin: 0 15%;
+    margin: 0 auto;
+    max-width: 1220px;
 }
 
 .upload-file {
-    // display: none;
+    opacity: 0;
+    position: absolute;
+    left: -9999px;
 }
 
 .btns {
@@ -32,6 +35,20 @@
     background: #0057e5;
     color: #f7f5f2;
     cursor: pointer;
+}
+
+.contents {
+    margin-top: 2rem;
+    border-top: 1px solid #ccc;
+    display: grid;
+    justify-content: center;
+    column-gap: 2rem;
+    grid-template-columns: auto auto auto auto auto auto;
+}
+
+.contents > img {
+    padding: 0.5rem;
+    width: 150px;
 }
 
 .register,
