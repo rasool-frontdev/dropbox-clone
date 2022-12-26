@@ -1,12 +1,8 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext } from "react";
 import { Context } from "../context/context";
-import { ref, uploadBytes, listAll, getDownloadURL } from "firebase/storage";
-import { storage } from "../firebase.config";
-import { v4 } from "uuid";
-import { RiUploadLine } from "react-icons/ri";
+
 import { BiChevronDown } from "react-icons/bi";
 import { AiOutlinePlus } from "react-icons/ai";
-import { toast } from "react-toastify";
 
 const UploadFile = () => {
     const { uploadBtn, setFileUpload, showModal, setShowModal } =
