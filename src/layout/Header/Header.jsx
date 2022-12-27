@@ -14,7 +14,7 @@ const Header = () => {
     const navigate = useNavigate();
 
     const location = useLocation();
-    const { signOutUser, user } = useContext(Context);
+    const { signOutUser, user, image } = useContext(Context);
 
     const handlerSignOut = async (e) => {
         try {
@@ -68,9 +68,24 @@ const Header = () => {
                                 location.pathname !== "/login" ? (
                                     <div className="dropdown">
                                         <div className="header-nav__login dropdown-btn">
-                                            <FaUserCog
-                                                style={{ width: "3rem" }}
-                                            />
+                                            {image ? (
+                                                <img
+                                                    src={image}
+                                                    alt="img"
+                                                    style={{
+                                                        borderRadius: "50%",
+                                                        width: "3rem",
+                                                        height: "3rem",
+                                                    }}
+                                                />
+                                            ) : (
+                                                <FaUserCog
+                                                    style={{
+                                                        width: "3rem",
+                                                        height: "1.5rem",
+                                                    }}
+                                                />
+                                            )}
                                             <div className="dropdown-content">
                                                 <NavLink
                                                     className="header-nav__link user"

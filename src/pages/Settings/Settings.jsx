@@ -33,17 +33,6 @@ const Settings = () => {
         imageurl: "",
         uid: "",
     });
-    const navigate = useNavigate();
-
-    const handlerDeleteUser = async (e) => {
-        try {
-            await deleteUser();
-            navigate("/");
-            toast.success("Successfully deleted user");
-        } catch (error) {
-            toast.error(error.message);
-        }
-    };
 
     const handler = (e) => {
         const { name, value } = e.target;
@@ -188,11 +177,7 @@ const Settings = () => {
                             forever
                         </b>
                     </div>
-                    <h4
-                        style={{ cursor: "pointer" }}
-                        onClick={handlerDeleteUser}>
-                        Delete account
-                    </h4>
+                    <h4 style={{ cursor: "pointer" }}>Delete account</h4>
                 </div>
             </from>
         </div>

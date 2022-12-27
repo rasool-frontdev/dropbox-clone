@@ -86,8 +86,12 @@
             }
 
             &-btn {
-                padding: 0.8rem;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 5rem;
                 font-size: 1.1rem;
+                height: 3rem;
                 color: #fff;
                 cursor: pointer;
             }
