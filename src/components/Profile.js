@@ -1,27 +1,87 @@
-import React, { useContext, useEffect, useState } from "react";
+import {
+    ref,
+    uploadBytesResumable,
+    deleteObject,
+    getDownloadURL,
+} from "firebase/storage";
+import React, { useContext, useState } from "react";
 import { Context } from "../context/context";
-import { ref, uploadBytes, listAll, getDownloadURL } from "firebase/storage";
-import { storage } from "../firebase.config";
-import { v4 } from "uuid";
-import { RiUploadLine } from "react-icons/ri";
-import { BiChevronDown } from "react-icons/bi";
-import { AiOutlinePlus } from "react-icons/ai";
-import { toast } from "react-toastify";
+import { storage, db } from "../firebase.config";
 
-const UploadFile = () => {
+const ProfilePhoto = () => {
+    const { profileInfo, image, setImage } = useContext(Context);
     const { uploadBtn, setFileUpload, showModal, setShowModal } =
         useContext(Context);
+    // const [image, setImage] = useState("");
+
+    const [profile, setProfile] = useState({
+        imageurl: "",
+        uid: "",
+    });
+
+    const submitHandler = async (e) => {
+        e.preventDefault();
+        try {
+            await profileInfo(profile);
+            alert("Profile Update Successfully");
+            setProfile({
+                imageurl: "",
+                uid: "",
+            });
+        } catch (error) {
+            alert("someError");
+            console.log(error);
+        }
+    };
+
+    const uploudImage = (e) => {
+        const imageref = e.target.files[0];
+        const storgeref = ref(storage, `images/${Date.now()}-${imageref.name}`);
+        const uploadimage = uploadBytesResumable(storgeref, imageref);
+        uploadimage.on(
+            "state_changed",
+            (onSnapshot) => {
+                const progress =
+                    (onSnapshot.bytesTransferred / onSnapshot.totalBytes) * 100;
+                console.log(progress);
+            },
+            (error) => {
+                console.log(error);
+            },
+            () => {
+                getDownloadURL(uploadimage.snapshot.ref).then((downloadURL) => {
+                    setImage(downloadURL);
+                    setProfile((pre) => {
+                        return {
+                            ...pre,
+                            imageurl: downloadURL,
+                        };
+                    });
+                });
+            }
+        );
+    };
+
+    const removeimage = () => {
+        console.log(profile.imageurl);
+        const deleteRef = ref(storage, image);
+        deleteObject(deleteRef)
+            .then(() => {
+                alert("deleted");
+                setImage("");
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    };
 
     return (
         <div>
-            <button
-                className="btn"
-                type="button"
+            <h4
+                style={{ cursor: "pointer" }}
                 onClick={() => setShowModal(true)}>
-                <AiOutlinePlus size="16" />
-                Upload
-                <BiChevronDown />
-            </button>
+                Edit
+            </h4>
             {showModal ? (
                 <>
                     <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
@@ -29,7 +89,7 @@ const UploadFile = () => {
                             <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
                                 <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
                                     <h2 className="text-3xl font-semibold">
-                                        Upload File
+                                        Upload photo
                                     </h2>
                                     <button
                                         className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
@@ -47,8 +107,9 @@ const UploadFile = () => {
                                             );
                                         }}
                                         type="file"
-                                        name="file"
+                                        name="imageurl"
                                         id="file"
+                                        accept="image/*"
                                         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white outline-none"
                                         placeholder="Enter folder name"
                                         required
@@ -78,4 +139,4 @@ const UploadFile = () => {
     );
 };
 
-export default UploadFile;
+export default ProfilePhoto;

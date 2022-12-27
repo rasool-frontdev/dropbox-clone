@@ -5,14 +5,26 @@ import { Context } from "../../context/context";
 
 const Login = () => {
     const { signInUser } = useContext(Context);
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+    const [user, setUser] = useState({
+        email: "",
+        password: "",
+    });
     const navigate = useNavigate();
+
+    const userHandler = (e) => {
+        const { name, value } = e.target;
+        setUser((prev) => {
+            return {
+                ...prev,
+                [name]: value,
+            };
+        });
+    };
 
     const handlerSubmit = async (e) => {
         e.preventDefault();
         try {
-            await signInUser(email, password);
+            await signInUser(user.email, user.password);
             toast.success("Successfully signed in!");
             navigate("/dashboard");
         } catch (error) {
@@ -29,21 +41,21 @@ const Login = () => {
                         <Link to={"/register"}>or create an account</Link>
                     </div>
                     <div className="form-body">
-                        {/* <p>First name</p>
-                        <input type="text" required />
-                        <p>Last name</p>
-                        <input type="text" /> */}
                         <p>Email</p>
                         <input
                             type="email"
+                            name="email"
+                            value={user.email}
                             required="Please enter an email address"
-                            onChange={(e) => setEmail(e.target.value)}
+                            onChange={userHandler}
                         />
                         <p>Password</p>
                         <input
                             type="password"
+                            name="password"
+                            value={user.password}
                             required="Please enter a password"
-                            onChange={(e) => setPassword(e.target.value)}
+                            onChange={userHandler}
                         />
                         <button type="submit">Continue</button>
                     </div>

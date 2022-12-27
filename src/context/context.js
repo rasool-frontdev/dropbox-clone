@@ -1,4 +1,4 @@
-import { auth } from "../firebase.config";
+import { auth, db } from "../firebase.config";
 import {
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword,
@@ -10,12 +10,13 @@ import { ref, uploadBytes, listAll, getDownloadURL } from "firebase/storage";
 import { storage } from "../firebase.config";
 import { v4 } from "uuid";
 import { toast } from "react-toastify";
+import { addDoc, collection } from "firebase/firestore";
 
-export const UserContext = createContext();
 export const Context = createContext();
 
 export const ContextProvider = ({ children }) => {
     const [user, setUser] = useState({});
+    const [image, setImage] = useState("");
 
     const createUser = (email, password) => {
         return createUserWithEmailAndPassword(auth, email, password);
@@ -27,6 +28,14 @@ export const ContextProvider = ({ children }) => {
 
     const signOutUser = () => {
         return signOut(auth);
+    };
+
+    const deleteUser = () => {
+        return deleteUser(auth);
+    };
+
+    const profileInfo = (profile) => {
+        return addDoc(collection(db, profile));
     };
 
     const [showModal, setShowModal] = useState(false);
@@ -71,9 +80,14 @@ export const ContextProvider = ({ children }) => {
 
     const value = {
         user,
+        setUser,
         createUser,
         signOutUser,
         signInUser,
+        deleteUser,
+        profileInfo,
+        image,
+        setImage,
         uploadBtn,
         showModal,
         setShowModal,

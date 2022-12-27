@@ -1,27 +1,11 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext } from "react";
 import { Context } from "../context/context";
-import { ref, uploadBytes, listAll, getDownloadURL } from "firebase/storage";
-import { storage } from "../firebase.config";
-import { v4 } from "uuid";
-import { RiUploadLine } from "react-icons/ri";
-import { BiChevronDown } from "react-icons/bi";
-import { AiOutlinePlus } from "react-icons/ai";
-import { toast } from "react-toastify";
 
-const UploadFile = () => {
+const ProfilePhoto = () => {
     const { uploadBtn, setFileUpload, showModal, setShowModal } =
         useContext(Context);
-
     return (
         <div>
-            <button
-                className="btn"
-                type="button"
-                onClick={() => setShowModal(true)}>
-                <AiOutlinePlus size="16" />
-                Upload
-                <BiChevronDown />
-            </button>
             {showModal ? (
                 <>
                     <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
@@ -29,7 +13,7 @@ const UploadFile = () => {
                             <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
                                 <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
                                     <h2 className="text-3xl font-semibold">
-                                        Upload File
+                                        Change Name
                                     </h2>
                                     <button
                                         className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
@@ -47,8 +31,9 @@ const UploadFile = () => {
                                             );
                                         }}
                                         type="file"
-                                        name="file"
+                                        name="imageurl"
                                         id="file"
+                                        accept="image/*"
                                         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white outline-none"
                                         placeholder="Enter folder name"
                                         required
@@ -65,7 +50,7 @@ const UploadFile = () => {
                                         className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                                         type="button"
                                         onClick={uploadBtn}>
-                                        Upload
+                                        Change
                                     </button>
                                 </div>
                             </div>
@@ -78,4 +63,4 @@ const UploadFile = () => {
     );
 };
 
-export default UploadFile;
+export default ProfilePhoto;

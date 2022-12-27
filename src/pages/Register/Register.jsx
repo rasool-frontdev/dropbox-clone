@@ -4,18 +4,30 @@ import { useContext, useState } from "react";
 import { toast } from "react-toastify";
 
 const Register = () => {
-    const userData= () =>{
-    }
     const { createUser } = useContext(Context);
     const navigate = useNavigate();
 
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+    // const [email, setEmail] = useState("");
+    // const [password, setPassword] = useState("");
+    const [user, setUser] = useState({
+        email: "",
+        password: "",
+    });
+
+    const userHandler = (e) => {
+        const { name, value } = e.target;
+        setUser((prev) => {
+            return {
+                ...prev,
+                [name]: value,
+            };
+        });
+    };
 
     const handlerSubmit = async (e) => {
         e.preventDefault();
         try {
-            await createUser(email, password);
+            await createUser(user.email, user.password);
             toast.success("Successfully registered!");
             navigate("/dashboard");
         } catch (error) {
@@ -46,16 +58,18 @@ const Register = () => {
                             id="email"
                             name="email"
                             type="email"
+                            value={user.email}
                             required="Please enter an email address"
-                            onChange={(e) => setEmail(e.target.value)}
+                            onChange={userHandler}
                         />
                         <p>Password</p>
                         <input
                             id="password"
                             name="password"
                             type="password"
+                            value={user.password}
                             required="Please enter a password"
-                            onChange={(e) => setPassword(e.target.value)}
+                            onChange={userHandler}
                         />
                         <button type="submit">Create an account</button>
                     </div>
