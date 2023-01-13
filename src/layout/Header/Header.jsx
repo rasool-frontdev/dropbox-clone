@@ -5,6 +5,8 @@ import { FaUserCog } from "react-icons/fa";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { Context } from "../../context/context";
 import { toast } from "react-toastify";
+import { signOut } from "firebase/auth";
+import { auth } from "../../firebase.config";
 
 const Header = () => {
     // ! Header section
@@ -12,25 +14,29 @@ const Header = () => {
     // * Header section
 
     const navigate = useNavigate();
+    const currentUser = true;
 
     const location = useLocation();
-    const { signOutUser, user, image } = useContext(Context);
+    const { userInfo } = useContext(Context);
 
     const handlerSignOut = async (e) => {
         try {
-            await signOutUser();
+            await signOut(auth).then(() => {
+                localStorage.removeItem("user");
+            });
             navigate("/");
             toast.success("Successfully signed out!");
         } catch (error) {
             toast.error(error.message);
         }
+        // console.log(currentUser);
     };
 
     return (
         <>
             <div className="header">
                 <div className="header-nav">
-                    {user ? (
+                    {userInfo ? (
                         <>
                             <NavLink
                                 to="/dashboard"
@@ -68,9 +74,9 @@ const Header = () => {
                                 location.pathname !== "/login" ? (
                                     <div className="dropdown">
                                         <div className="header-nav__login dropdown-btn">
-                                            {image ? (
+                                            {userInfo.photoURL ? (
                                                 <img
-                                                    src={image}
+                                                    src={"http://placehold.it/"}
                                                     alt="img"
                                                     style={{
                                                         borderRadius: "50%",

@@ -14,67 +14,6 @@ const ProfilePhoto = () => {
         useContext(Context);
     // const [image, setImage] = useState("");
 
-    const [profile, setProfile] = useState({
-        imageurl: "",
-        uid: "",
-    });
-
-    const submitHandler = async (e) => {
-        e.preventDefault();
-        try {
-            await profileInfo(profile);
-            alert("Profile Update Successfully");
-            setProfile({
-                imageurl: "",
-                uid: "",
-            });
-        } catch (error) {
-            alert("someError");
-            console.log(error);
-        }
-    };
-
-    const uploudImage = (e) => {
-        const imageref = e.target.files[0];
-        const storgeref = ref(storage, `images/${Date.now()}-${imageref.name}`);
-        const uploadimage = uploadBytesResumable(storgeref, imageref);
-        uploadimage.on(
-            "state_changed",
-            (onSnapshot) => {
-                const progress =
-                    (onSnapshot.bytesTransferred / onSnapshot.totalBytes) * 100;
-                console.log(progress);
-            },
-            (error) => {
-                console.log(error);
-            },
-            () => {
-                getDownloadURL(uploadimage.snapshot.ref).then((downloadURL) => {
-                    setImage(downloadURL);
-                    setProfile((pre) => {
-                        return {
-                            ...pre,
-                            imageurl: downloadURL,
-                        };
-                    });
-                });
-            }
-        );
-    };
-
-    const removeimage = () => {
-        console.log(profile.imageurl);
-        const deleteRef = ref(storage, image);
-        deleteObject(deleteRef)
-            .then(() => {
-                alert("deleted");
-                setImage("");
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-    };
-
     return (
         <div>
             <h4

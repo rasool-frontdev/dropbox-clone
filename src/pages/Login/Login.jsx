@@ -1,35 +1,25 @@
+import { signInWithEmailAndPassword } from "firebase/auth";
 import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { Context } from "../../context/context";
+import { auth } from "../../firebase.config";
 
 const Login = () => {
-    const { signInUser } = useContext(Context);
-    const [user, setUser] = useState({
-        email: "",
-        password: "",
-    });
     const navigate = useNavigate();
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
 
-    const userHandler = (e) => {
-        const { name, value } = e.target;
-        setUser((prev) => {
-            return {
-                ...prev,
-                [name]: value,
-            };
-        });
-    };
+    const { loginUser } = useContext(Context);
 
     const handlerSubmit = async (e) => {
         e.preventDefault();
-        try {
-            await signInUser(user.email, user.password);
-            toast.success("Successfully signed in!");
-            navigate("/dashboard");
-        } catch (error) {
-            toast.error(`Stop ${error.message}`);
-        }
+        const data = {
+            email,
+            password,
+        };
+
+        await loginUser(data);
     };
 
     return (
@@ -37,7 +27,7 @@ const Login = () => {
             <div className="login-form">
                 <form className="form" onSubmit={handlerSubmit}>
                     <div className="form-header">
-                        <h1>Create an account</h1>
+                        <h1>Sign in</h1>
                         <Link to={"/register"}>or create an account</Link>
                     </div>
                     <div className="form-body">
@@ -45,17 +35,15 @@ const Login = () => {
                         <input
                             type="email"
                             name="email"
-                            value={user.email}
                             required="Please enter an email address"
-                            onChange={userHandler}
+                            onChange={(e) => setEmail(e.target.value)}
                         />
                         <p>Password</p>
                         <input
                             type="password"
                             name="password"
-                            value={user.password}
                             required="Please enter a password"
-                            onChange={userHandler}
+                            onChange={(e) => setPassword(e.target.value)}
                         />
                         <button type="submit">Continue</button>
                     </div>

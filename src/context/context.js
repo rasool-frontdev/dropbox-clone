@@ -1,29 +1,55 @@
-import { auth, db } from "../firebase.config";
+import { auth, database } from "../firebase.config";
 import {
     createUserWithEmailAndPassword,
-    signInWithEmailAndPassword,
-    signOut,
     onAuthStateChanged,
+    signOut,
 } from "firebase/auth";
 import { createContext, useEffect, useState } from "react";
-import { ref, uploadBytes, listAll, getDownloadURL } from "firebase/storage";
-import { storage } from "../firebase.config";
-import { v4 } from "uuid";
 import { toast } from "react-toastify";
-import { addDoc, collection } from "firebase/firestore";
+import UserStructure from "../components/UserStructure";
+import { useNavigate } from "react-router-dom";
 
 export const Context = createContext();
 
 export const ContextProvider = ({ children }) => {
-    const [user, setUser] = useState({});
-    const [image, setImage] = useState("");
+    const navigate = useNavigate();
+    const [userInfo, setUserInfo] = useState({});
 
-    const createUser = (email, password) => {
-        return createUserWithEmailAndPassword(auth, email, password);
+    const setUser = (data) => ({
+        type: "",
+        payload: data,
+    });
+
+    const createUser = ({ firstName, email, password }) => {
+        createUserWithEmailAndPassword(auth, email, password)
+            .then((user) => {
+                setUserInfo(user.user);
+                const newUser = UserStructure(email, firstName, user.user.uid);
+                database.users.add(newUser).then((data) => {
+                    setUser({
+                        userId: user.user.uid,
+                        user: { data: user.user.providerData[0] },
+                    });
+                    navigate("/dashboard");
+                    toast.success("User registered successfully");
+                    localStorage.setItem("user", JSON.stringify(user.user));
+                });
+            })
+            .catch((error) => {
+                toast.error(error.message);
+            });
     };
 
-    const signInUser = (email, password) => {
-        return signInWithEmailAndPassword(auth, email, password);
+    const loginUser = ({ email, password }) => {
+        auth.signInWithEmailAndPassword(email, password)
+            .then(async (user) => {
+                await database.users.where("uid", "==", user.user.uid).get();
+                navigate("/dashboard");
+                toast.success(" Successfully logged in");
+            })
+            .catch((error) => {
+                toast.error(error.message);
+            });
     };
 
     const signOutUser = () => {
@@ -34,65 +60,12 @@ export const ContextProvider = ({ children }) => {
         return deleteUser(auth);
     };
 
-    const profileInfo = (profile) => {
-        return addDoc(collection(db, profile));
-    };
-
-    const [showModal, setShowModal] = useState(false);
-    const [fileUpload, setFileUpload] = useState(null);
-    const [fileList, setFileList] = useState([]);
-    const fileListRef = ref(storage, "files/");
-    // const Upload = () => {
-    const uploadBtn = () => {
-        if (fileUpload == null) return;
-
-        const fileRef = ref(storage, `files/${fileUpload.name + v4()}`);
-        uploadBytes(fileRef, fileUpload)
-            .then((snaphsot) => {
-                getDownloadURL(snaphsot.ref).then((url) => {
-                    setFileList((prev) => [...prev, url]);
-                });
-                setShowModal(false);
-                toast.success("File uploaded successfully");
-            })
-            .catch((error) => {
-                toast.error("Failed to upload file");
-            });
-    };
-    useEffect(() => {
-        listAll(fileListRef).then((res) => {
-            res.items.forEach((item) => {
-                getDownloadURL(item).then((url) => {
-                    setFileList((prev) => [...prev, url]);
-                });
-            });
-        });
-    }, []);
-
-    useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-            console.log(currentUser);
-            setUser(currentUser);
-        });
-
-        return () => unsubscribe();
-    }, []);
-
     const value = {
-        user,
-        setUser,
+        userInfo,
         createUser,
+        loginUser,
         signOutUser,
-        signInUser,
         deleteUser,
-        profileInfo,
-        image,
-        setImage,
-        uploadBtn,
-        showModal,
-        setShowModal,
-        fileList,
-        setFileUpload,
     };
 
     return <Context.Provider value={value}>{children}</Context.Provider>;

@@ -1,6 +1,6 @@
-import React from "react";
-import { Route, Routes, useLocation } from "react-router-dom";
-import ProtectRoute from "../components/ProtectRoute";
+import React, { useContext } from "react";
+import { Navigate, Route, Routes, useLocation } from "react-router-dom";
+// import ProtectRoute from "../components/ProtectRoute";
 import Dashboard from "../pages/Dashboard/Dashboard";
 import Desktop from "../pages/Desktop/Desktop";
 import Home from "../pages/Home/Home";
@@ -12,8 +12,6 @@ import Settings from "../pages/Settings/Settings";
 import Header from "./Header/Header";
 
 const Layout = () => {
-    const location = useLocation();
-
     return (
         <>
             <Header />
@@ -26,9 +24,7 @@ const Layout = () => {
                 <Route
                     path="/dashboard"
                     element={
-                        <ProtectRoute>
                             <Dashboard />
-                        </ProtectRoute>
                     }
                 />
                 <Route path="/settings" element={<Settings />} />

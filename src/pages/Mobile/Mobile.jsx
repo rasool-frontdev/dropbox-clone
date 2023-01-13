@@ -38,7 +38,7 @@ const Mobile = () => {
                     src="https://player.vimeo.com/video/716181544?h=78a6252e8d?autoplay=1&loop=1&autopause=0"
                     width="700"
                     height="476"
-                    frameborder="0"
+                    frameBorder="0"
                     allowfullscreen
                 />
                 <div className="mobile-content__download">
