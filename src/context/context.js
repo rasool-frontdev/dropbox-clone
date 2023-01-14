@@ -46,6 +46,7 @@ export const ContextProvider = ({ children }) => {
                 await database.users.where("uid", "==", user.user.uid).get();
                 navigate("/dashboard");
                 localStorage.setItem("user", JSON.stringify(user.user));
+                setUserInfo(user.user);
                 toast.success(" Successfully logged in");
             })
             .catch((error) => {
