@@ -5,7 +5,6 @@ import { FaUserCog } from "react-icons/fa";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { Context } from "../../context/context";
 import { toast } from "react-toastify";
-import { signOut } from "firebase/auth";
 import { auth } from "../../firebase.config";
 
 const Header = () => {
@@ -17,19 +16,10 @@ const Header = () => {
     const currentUser = true;
 
     const location = useLocation();
-    const { userInfo } = useContext(Context);
+    const { userInfo, logOutUser } = useContext(Context);
 
     const handlerSignOut = async (e) => {
-        try {
-            await signOut(auth).then(() => {
-                localStorage.removeItem("user");
-            });
-            navigate("/");
-            toast.success("Successfully signed out!");
-        } catch (error) {
-            toast.error(error.message);
-        }
-        // console.log(currentUser);
+        await logOutUser();
     };
 
     return (

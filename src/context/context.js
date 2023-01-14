@@ -45,6 +45,7 @@ export const ContextProvider = ({ children }) => {
             .then(async (user) => {
                 await database.users.where("uid", "==", user.user.uid).get();
                 navigate("/dashboard");
+                localStorage.setItem("user", JSON.stringify(user.user));
                 toast.success(" Successfully logged in");
             })
             .catch((error) => {
@@ -52,8 +53,17 @@ export const ContextProvider = ({ children }) => {
             });
     };
 
-    const signOutUser = () => {
-        return signOut(auth);
+    const logOutUser = () => {
+        auth.signOut()
+            .then(() => {
+                setUserInfo(null);
+                localStorage.clear("user");
+                navigate("/");
+                toast.success(" Successfully logged out");
+            })
+            .catch((error) => {
+                toast.error(error.message);
+            });
     };
 
     const deleteUser = () => {
@@ -64,7 +74,7 @@ export const ContextProvider = ({ children }) => {
         userInfo,
         createUser,
         loginUser,
-        signOutUser,
+        logOutUser,
         deleteUser,
     };
 
