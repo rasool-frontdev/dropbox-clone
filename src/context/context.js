@@ -1,9 +1,5 @@
 import { auth, database } from "../firebase.config";
-import {
-    createUserWithEmailAndPassword,
-    onAuthStateChanged,
-    signOut,
-} from "firebase/auth";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 import { createContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import UserStructure from "../components/UserStructure";
@@ -14,7 +10,6 @@ export const Context = createContext();
 export const ContextProvider = ({ children }) => {
     const navigate = useNavigate();
     const [userInfo, setUserInfo] = useState({});
-    const [loggedIn, setLoggedIn] = useState(false);
     const setUser = (data) => ({
         type: "",
         payload: data,
@@ -31,8 +26,7 @@ export const ContextProvider = ({ children }) => {
                         user: { data: user.user.providerData[0] },
                     });
                     navigate("/dashboard");
-                    setLoggedIn(true);
-                    localStorage.setItem("loggedIn", JSON.stringify(loggedIn));
+                    window.localStorage.setItem("loggedIn", true);
                     toast.success("User registered successfully");
                 });
             })
@@ -46,8 +40,7 @@ export const ContextProvider = ({ children }) => {
             .then(async (user) => {
                 await database.users.where("uid", "==", user.user.uid).get();
                 navigate("/dashboard");
-                setLoggedIn(true);
-                localStorage.setItem("loggedIn", JSON.stringify(loggedIn));
+                window.localStorage.setItem("loggedIn", true);
                 toast.success(" Successfully logged in");
             })
             .catch((error) => {
@@ -60,9 +53,8 @@ export const ContextProvider = ({ children }) => {
             .then(() => {
                 setUserInfo({});
                 localStorage.clear("isLogin");
-                setLoggedIn(false);
                 navigate("/");
-                toast.success(" Successfully logged out");
+                toast.success("Successfully logged out");
             })
             .catch((error) => {
                 toast.error(error.message);
@@ -73,11 +65,8 @@ export const ContextProvider = ({ children }) => {
         return deleteUser(auth);
     };
 
-    useEffect(() => {});
-
     const value = {
         userInfo,
-        loggedIn,
         createUser,
         loginUser,
         logOutUser,

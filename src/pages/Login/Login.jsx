@@ -10,7 +10,7 @@ const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
-    const { loginUser } = useContext(Context);
+    const { loginUser, loggedIn } = useContext(Context);
 
     const handlerSubmit = async (e) => {
         e.preventDefault();

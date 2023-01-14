@@ -1,13 +1,11 @@
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import { Context } from "../../context/context";
 import { useContext, useState } from "react";
-import { toast } from "react-toastify";
 
 const Register = () => {
     const [firstName, setFirstName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [error, setError] = useState("");
 
     const { createUser } = useContext(Context);
     const handlerSubmit = async (e) => {
