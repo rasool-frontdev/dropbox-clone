@@ -14,7 +14,7 @@ export const Context = createContext();
 export const ContextProvider = ({ children }) => {
     const navigate = useNavigate();
     const [userInfo, setUserInfo] = useState({});
-
+    const [loggedIn, setLoggedIn] = useState(false);
     const setUser = (data) => ({
         type: "",
         payload: data,
@@ -31,8 +31,9 @@ export const ContextProvider = ({ children }) => {
                         user: { data: user.user.providerData[0] },
                     });
                     navigate("/dashboard");
+                    setLoggedIn(true);
+                    localStorage.setItem("loggedIn", JSON.stringify(loggedIn));
                     toast.success("User registered successfully");
-                    localStorage.setItem("user", JSON.stringify(user.user));
                 });
             })
             .catch((error) => {
@@ -45,8 +46,8 @@ export const ContextProvider = ({ children }) => {
             .then(async (user) => {
                 await database.users.where("uid", "==", user.user.uid).get();
                 navigate("/dashboard");
-                localStorage.setItem("user", JSON.stringify(user.user));
-                setUserInfo(user.user);
+                setLoggedIn(true);
+                localStorage.setItem("loggedIn", JSON.stringify(loggedIn));
                 toast.success(" Successfully logged in");
             })
             .catch((error) => {
@@ -57,8 +58,9 @@ export const ContextProvider = ({ children }) => {
     const logOutUser = () => {
         auth.signOut()
             .then(() => {
-                setUserInfo(null);
-                localStorage.clear("user");
+                setUserInfo({});
+                localStorage.clear("isLogin");
+                setLoggedIn(false);
                 navigate("/");
                 toast.success(" Successfully logged out");
             })
@@ -71,8 +73,11 @@ export const ContextProvider = ({ children }) => {
         return deleteUser(auth);
     };
 
+    useEffect(() => {});
+
     const value = {
         userInfo,
+        loggedIn,
         createUser,
         loginUser,
         logOutUser,

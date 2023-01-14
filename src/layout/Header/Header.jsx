@@ -12,21 +12,21 @@ const Header = () => {
     // ? Header section
     // * Header section
 
-    const navigate = useNavigate();
-    const currentUser = true;
-
     const location = useLocation();
-    const { userInfo, logOutUser } = useContext(Context);
+    const { userInfo, loggedIn, logOutUser } = useContext(Context);
 
     const handlerSignOut = async (e) => {
         await logOutUser();
+        // console.log(isLogged);
     };
+
+    console.log(`header ${loggedIn}`);
 
     return (
         <>
             <div className="header">
                 <div className="header-nav">
-                    {userInfo ? (
+                    {loggedIn ? (
                         <>
                             <NavLink
                                 to="/dashboard"

@@ -6,14 +6,6 @@ import {
 } from "firebase/storage";
 import React, { useContext, useState } from "react";
 import { Context } from "../../context/context";
-import { storage, database } from "../../firebase.config";
-import {
-    sendEmailVerification,
-    getAuth,
-    onAuthStateChanged,
-} from "firebase/auth";
-import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
 
 const Settings = () => {
     const { userInfo } = useContext(Context);
