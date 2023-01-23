@@ -1,0 +1,16 @@
+.folder {
+    display: flex;
+    flex-direction: column;
+    border: none;
+    background: none;
+    height: 5rem;
+}
+
+.folder:hover {
+    background-color: rgba(225, 225, 225, 0.845);
+}
+
+.text {
+    margin-left: 0.2rem;
+    color: black;
+}

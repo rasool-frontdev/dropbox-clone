@@ -1,0 +1,17 @@
+.uploaded-files {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: none;
+    height: 5rem;
+    padding-top: 1rem;
+    color: #a1c9f7;
+
+    &:hover {
+        background-color: rgba(225, 225, 225, 0.845);
+    }
+}
+
+.text {
+    color: black;
+}
